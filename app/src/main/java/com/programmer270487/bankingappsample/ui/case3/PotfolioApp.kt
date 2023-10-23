@@ -17,12 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.programmer270487.bankingappsample.data.local.case3.DonutChartData
-import com.programmer270487.bankingappsample.data.local.case3.Transaction
+import com.programmer270487.bankingappsample.data.local.case3.LineChartData
 
 @Composable
 fun PortfolioApp(
     navController: NavController,
     portfolioData: List<DonutChartData>,
+    lineChartData: LineChartData?
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -32,7 +33,7 @@ fun PortfolioApp(
             onClick = { selectedTabIndex = 0 }
         ) {
             Text(
-                text = "Portfolio",
+                text = "Portfolio Chart 1",
                 Modifier
                     .background(Color.Cyan)
                     .padding(10.dp)
@@ -45,9 +46,22 @@ fun PortfolioApp(
             onClick = { selectedTabIndex = 1 }
         ) {
             Text(
-                text = "Detail Transaksi",
+                text = "Portfolio Chart 2",
                 Modifier
                     .background(MaterialTheme.colorScheme.secondary)
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            )
+        }
+
+        Tab(
+            selected = selectedTabIndex == 2,
+            onClick = { selectedTabIndex = 2 }
+        ) {
+            Text(
+                text = "Detail Transaksi",
+                Modifier
+                    .background(MaterialTheme.colorScheme.primary)
                     .padding(10.dp)
                     .fillMaxWidth()
             )
@@ -55,7 +69,11 @@ fun PortfolioApp(
     }
 
     when (selectedTabIndex) {
-        0 -> PortfolioScreen(portfolioData, navController)
-        1 -> TransactionDetailScreen(portfolioData, navController)
+        0 -> DonutPortfolioScreen(
+            portfolioData,
+            navController
+        )
+        1 -> LinePortfolioScreen(lineChartData)
+        2 -> TransactionDetailScreen(portfolioData, navController)
     }
 }

@@ -14,7 +14,7 @@ import androidx.navigation.NavController
 import com.programmer270487.bankingappsample.data.local.case3.DonutChartData
 
 @Composable
-fun PortfolioScreen(
+fun DonutPortfolioScreen(
     portfolioData: List<DonutChartData>,
     navController: NavController
 ) {
