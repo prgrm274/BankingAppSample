@@ -19,9 +19,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.programmer270487.bankingappsample.R
+import com.programmer270487.bankingappsample.data.local.case3.LineChartData
 import com.programmer270487.bankingappsample.ui.case2.PromoApp
 import com.programmer270487.bankingappsample.ui.case3.PortfolioApp
 import com.programmer270487.bankingappsample.utils.parseJsonToPortfolioDataWithDiffType
+import com.programmer270487.bankingappsample.utils.parseLineChartJson
 import com.programmer270487.bankingappsample.utils.readJsonFile
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -31,7 +33,8 @@ fun MainScreen(context: Context) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val navController = rememberNavController()
     val json = readJsonFile(context, "json3.json")
-    val portfolioData = parseJsonToPortfolioDataWithDiffType(json)
+    val donutChartData = parseJsonToPortfolioDataWithDiffType(json)
+    val lineChartData = parseLineChartJson(json)
 
     Scaffold(
         bottomBar = {
@@ -89,7 +92,11 @@ fun MainScreen(context: Context) {
                 QRCodeScannerScreen()
             }
             composable("portfolio") {
-                PortfolioApp(navController, portfolioData = portfolioData)
+                PortfolioApp(
+                    navController,
+                    portfolioData = donutChartData,
+                    lineChartData
+                )
             }
         }
     }
